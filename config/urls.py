@@ -1,0 +1,33 @@
+from django.urls import path
+from relay import auth_views, views, workspace_views, ai, topics, mobile_auth, topic_corrections, topic_hierarchy, workflow_views, processing
+
+urlpatterns = [
+    path('api/processing/', processing.Processing.as_view()),
+    path('api/corrections/history/', workflow_views.History.as_view()),
+    path('api/ungrouped/', workflow_views.Ungrouped.as_view()),
+    path('api/relationships/', workflow_views.RelationshipMap.as_view()),
+    path('api/topics/<slug:topic>/insights/', workflow_views.Insights.as_view()),
+    path('api/topics/<slug:topic>/structure/', topic_hierarchy.TopicStructure.as_view()),
+    path('api/topics/', topic_corrections.TopicDirectory.as_view()),
+    path('api/topics/<slug:topic>/corrections/', topic_corrections.CorrectTopic.as_view()),
+    path('api/mobile/login/', mobile_auth.MobileLogin.as_view()),
+    path('api/mobile/signup/', mobile_auth.MobileSignup.as_view()),
+    path('api/mobile/me/', mobile_auth.MobileMe.as_view()),
+    path('api/mobile/logout/', mobile_auth.MobileLogout.as_view()),
+    path('api/topics/prepare/', topics.PrepareTopics.as_view()),
+    path('api/topics/<slug:topic>/messages/', topics.TopicMessages.as_view()),
+    path('api/topics/<slug:topic>/messages/<uuid:message_id>/context/', topics.TopicMessageContext.as_view()),
+    path('api/ask/', ai.Ask.as_view()),
+    path('api/workspace/', workspace_views.Workspace.as_view()),
+    path('api/search/', workspace_views.SearchMessages.as_view()),
+    path('api/auth/csrf/', auth_views.csrf), path('api/auth/me/', auth_views.me),
+    path('api/auth/signup/', auth_views.signup), path('api/auth/login/', auth_views.signin),
+    path('api/auth/logout/', auth_views.signout),
+    path('api/imports/', views.ImportList.as_view()),
+    path('api/imports/preview/', views.ImportPreview.as_view()),
+    path('api/imports/<uuid:pk>/', views.ImportDetail.as_view()),
+    path('api/imports/<uuid:pk>/confirm/', views.ImportConfirm.as_view()),
+    path('api/chats/', views.ChatList.as_view()),
+    path('api/chats/<uuid:pk>/', views.ChatDetail.as_view()),
+    path('api/chats/<uuid:pk>/messages/', views.MessageList.as_view()),
+]
